@@ -15,17 +15,19 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: k8s-node1
       containers:
-        - name: ollama
-          image: ollama/ollama:latest
-          ports:
-            - containerPort: 11434
-          volumeMounts:
-            - name: ollama-storage
-              mountPath: /root/.ollama
-      volumes:
+      - name: ollama
+        image: ollama/ollama:latest
+        ports:
+        - containerPort: 11434
+        # volumeMounts写在容器内部，和ports同级
+        volumeMounts:
         - name: ollama-storage
-          persistentVolumeClaim:
-            claimName: ollama-pvc
+          mountPath: /root/.ollama
+      # volumes 和 containers、nodeSelector平级，在template.spec下
+      volumes:
+      - name: ollama-storage
+        persistentVolumeClaim:
+          claimName: ollama-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -35,6 +37,5 @@ spec:
   selector:
     app: ollama
   ports:
-    - port: 11434
-      targetPort: 11434
-
+  - port: 11434
+    targetPort: 11434
