@@ -20,20 +20,20 @@ spec:
           operator: Exists
           effect: NoSchedule
       containers:
-      - name: ollama
-        image: ollama/ollama
-        resources:
-          requests:
-            memory: "1Gi"
-            cpu: "500m"
-          limits:
-            memory: "2Gi"
-            cpu: "1000m"
-        volumeMounts:
-        - name: ollama-storage
-          mountPath: /root/.ollama
+        - name: ollama
+          image: ollama/ollama
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          volumeMounts:
+            - name: ollama-storage
+              mountPath: /root/.ollama
       volumes:
-      - name: ollama-storage
-        persistentVolumeClaim:
-          claimName: ollama-pvc
+        - name: ollama-storage
+          persistentVolumeClaim:
+            claimName: ollama-pvc
 
