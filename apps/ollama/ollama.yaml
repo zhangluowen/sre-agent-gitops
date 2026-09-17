@@ -19,11 +19,9 @@ spec:
         image: ollama/ollama:latest
         ports:
         - containerPort: 11434
-        # volumeMounts写在容器内部，和ports同级
         volumeMounts:
         - name: ollama-storage
           mountPath: /root/.ollama
-      # volumes 和 containers、nodeSelector平级，在template.spec下
       volumes:
       - name: ollama-storage
         persistentVolumeClaim:
